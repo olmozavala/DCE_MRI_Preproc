@@ -2,14 +2,15 @@ DCE-MRI Image preprocessing for breast lesion segmentation
 ====
 
 This code contains a set of Matlab scripts to perform the preprocessing
-of DCE-MRI images of the breast. The preprocessing has to steps, 
-a registration step and an image enhancement step using machine learning.  
+of DCE-MRI images of the breast. The preprocessing has two steps, 
+a registration step using affine intensity based transformations; and 
+an image enhancement step using machine learning.  
 
 # Requirements
 This software uses the NIfTIi and ANALYZE image toolbox available at:
 <http://www.mathworks.com/matlabcentral/fileexchange/8797-tools-for-nifti-and-analyze-image>
 
-It also assumes that you have access to a group of DCE-MRI images stored
+It also assumes that you have access to a group of DCE-MRI images stored somewhere
 in separate folders. These are the two paths that are defined in most of the matlab files:
 one for the nifti library, one for the DCE-MRI image folders. 
 
