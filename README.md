@@ -5,6 +5,14 @@ This code contains a set of Matlab scripts to perform the preprocessing
 of DCE-MRI images of the breast. The preprocessing has to steps, 
 a registration step and an image enhancement step using machine learning.  
 
+# Requirements
+This software uses the NIfTIi and ANALYZE image toolbox available at:
+<http://www.mathworks.com/matlabcentral/fileexchange/8797-tools-for-nifti-and-analyze-image>
+
+It also assumes that you have access to a group of DCE-MRI images stored
+in separate folders. These are the two paths that are defined in most of the matlab files:
+one for the nifti library, one for the DCE-MRI image folders. 
+
 # Description
 DCE-MRI images are registered using an intensity based rigid
 transformation algorithm based on gradient descent or a genetic algorithm. After the registration, voxels 
