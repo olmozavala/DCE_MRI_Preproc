@@ -106,35 +106,35 @@ function plotIdx = dispResults(par_sampleOriginal, par_sample, par_sampleReg, pa
     axis([1 length(MSE) 1 6*10^9]); hold off;
     plotIdx = plotIdx+3;
 
-%%%%%%%%%%%%%%%%%%%%%  Used to visualize the disparity between the images %%%%%%%%%%%%%%%%%%%%%  
-function visualizeDisparity(imgData, totImages, x, y, z, sizeImg,folder, ROI_end, ROI_start,fontsize)
-    H= figure('Position',[100 100 1300 800]);
-    sizeImg = 20;
-    sampleOriginal = imgData(x-sizeImg:x+sizeImg,y-sizeImg:y+sizeImg,z);
+%%%%%%%%%%%%%%%%%%%%%  used to visualize the disparity between the images %%%%%%%%%%%%%%%%%%%%%  
+function visualizedisparity(imgdata, totimages, x, y, z, sizeimg,folder, roi_end, roi_start,fontsize)
+    h= figure('position',[100 100 1300 800]);
+    sizeimg = 20;
+    sampleoriginal = imgdata(x-sizeimg:x+sizeimg,y-sizeimg:y+sizeimg,z);
     h = subplot(4,4,[1:8]);hold on;
-    set(h,'XTick',[],'YTick',[]);
+    set(h,'xtick',[],'ytick',[]);
     axis([0 352 0 171 ]);
-    imshow(imgData(:,:,z)',[0 3500],'InitialMagnification','fit');
-    rectangle('Position',[x-sizeImg, y-sizeImg, 2*sizeImg, 2*sizeImg],'EdgeColor','r');
-    title('Region of interst','FontSize',fontsize);
+    imshow(imgdata(:,:,z)',[0 3500],'initialmagnification','fit');
+    rectangle('position',[x-sizeimg, y-sizeimg, 2*sizeimg, 2*sizeimg],'edgecolor','r');
+    title('region of interst','fontsize',fontsize);
 
-    plotIdx = 9;
+    plotidx = 9;
 
-    for  i=2:totImages
-        fileName = strcat(folder,num2str(i),'.nii');
-        % Loading the image
-        nii = load_nii(fileName);
-        imgData= nii.img;
-        imgData = imgData(:,ROI_end:-1:ROI_start,:);
-        sample = imgData(x-sizeImg:x+sizeImg,y-sizeImg:y+sizeImg,z);
-        subplot(4,4,plotIdx);
-        imshow(sample(:,:,:)',[0 3500],'InitialMagnification','fit');
-        title(strcat('MRI at T=',num2str(i)),'FontSize',fontsize);
-        subplot(4,4,plotIdx+4);
-        imshowpair(sampleOriginal(:,:,:)', sample(:,:,:)');
-        title(strcat('Difference t=0 vs t=',num2str(i)),'FontSize',fontsize-1);
-        plotIdx= plotIdx+1;
+    for  i=2:totimages
+        filename = strcat(folder,num2str(i),'.nii');
+        % loading the image
+        nii = load_nii(filename);
+        imgdata= nii.img;
+        imgdata = imgdata(:,roi_end:-1:roi_start,:);
+        sample = imgdata(x-sizeimg:x+sizeimg,y-sizeimg:y+sizeimg,z);
+        subplot(4,4,plotidx);
+        imshow(sample(:,:,:)',[0 3500],'initialmagnification','fit');
+        title(strcat('mri at t=',num2str(i)),'fontsize',fontsize);
+        subplot(4,4,plotidx+4);
+        imshowpair(sampleoriginal(:,:,:)', sample(:,:,:)');
+        title(strcat('difference t=0 vs t=',num2str(i)),'fontsize',fontsize-1);
+        plotidx= plotidx+1;
     end
     tightfig;
 
-    saveas(H,'Results/Mismatch','png');
+    saveas(h,'results/mismatch','png');

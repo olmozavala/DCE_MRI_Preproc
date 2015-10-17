@@ -6,6 +6,8 @@ clc;
 
 addpath('/home/olmozavala/Dropbox/OzOpenCL/MatlabActiveContours/Load_NIfTI_Images/External_Tools');
 addpath('/home/olmozavala/Dropbox/OzOpenCL/Matlab_ImagePreProcessing_Kinetic/Kinetics/Kinetic_Curves_by_classes/');
+%folders={ '8256301_p1_ok', '7585734_p14_ok_huge_tumor', '6107252_p2_ok', '5641445_p1_ok_non-mass_from_mass', '0847664_p6_ok'};
+folders={ '3107404_p7_ok', '4030560_p10_ok', '2004235_p9_ok'};
 
 % ----------- Reads the curves for each class ----------
 fprintf('Reading the curves...\n'); 
@@ -93,30 +95,35 @@ fprintf('Making the classifiers...\n');
 NBClassifier = fitcnb(curveMatrix, outputVector)
 isGenRate = resubLoss(NBClassifier);
 fprintf('Naive Bayes classification error of %4.2f % \n',isGenRate*100);
+% Save the NB clasifier 
+save('NBClassifier.mat', 'NBClassifier');
 
 TreesClassifier = fitctree(curveMatrix, outputVector)
 isGenRate = resubLoss(TreesClassifier);
 fprintf('Regression Trees classification error of %4.2f % \n',isGenRate*100);
+% Save the RegTree clasifier 
+save('RTClassifier.mat', 'TreesClassifier');
 
 % ======================== Classify images ==========================================
 fprintf('Classifiying the images...\n');
 imagesFolder ='/media/USBSimpleDrive/BigData_Images_and_Others/PhD_Thesis/DCE_MRI/'
 addpath(imagesFolder);
-folders={ '8256301_p1_ok', '7585734_p14_ok_huge_tumor', '6107252_p2_ok', '5641445_p1_ok_non-mass_from_mass', '0847664_p6_ok'};
 
 for i = 1:length(folders)
     % Read all 5 niftis
     fprintf('\nReading nifti files for: %s ... \n',folders{i});
     niftis = readNifti(folders{i});
 
-    % -------------- Apply the classifier into the image ------------- 
-    %classified = makeMagic(niftis, NBClassifier);
+    % -------------- Apply the Regression tree classifier into the image ------------- 
     classified = makeMagic(niftis, TreesClassifier);
-
     % --------------- Saving classification of the matrix features ------------
     save(strcat(imagesFolder,folders{i},'/ClassifiedPixels.mat'),'classified')
     
-    % Modify the second image using the classification information
+
+    % -------------- Apply the NB classifier into the image ------------- 
+    classified = makeMagic(niftis, NBClassifier);
+    % --------------- Saving classification of the matrix features ------------
+    save(strcat(imagesFolder,folders{i},'/ClassifiedPixelsNB.mat'),'classified')
 end
 
 % This function is used to read 5 nifti files for each folder

@@ -93,10 +93,10 @@ plot(chest','--b','LineWidth',1);
 
 %========== Saving the curves ============
 fprintf('Displaying all the curves..\n');
-save(strcat(saveFolder,'lesions'),'lesions')
-save(strcat(saveFolder,'background'),'background')
-save(strcat(saveFolder,'chest'),'chest')
-save(strcat(saveFolder,'stissue'),'stissue')
+%save(strcat(saveFolder,'lesions'),'lesions')
+%save(strcat(saveFolder,'background'),'background')
+%save(strcat(saveFolder,'chest'),'chest')
+%save(strcat(saveFolder,'stissue'),'stissue')
 
 % Reads the nifti files from the folder being specified
 function niftis = readNifti(folder)

@@ -4,11 +4,11 @@ close all;
 clear all;
 clc;
 
-matlabpool close force 'local'
-matlabpool open 4
+%matlabpool close force 'local'
+%matlabpool open 4
 
 imagesRootFolder = '/media/USBSimpleDrive/BigData_Images_and_Others/PhD_Thesis/DCE_MRI/';
-addpath('/home/olmozavala/Dropbox/OzOpenCL/MatlabActiveContours/Load_NIfTI_Images/External_Tools');
+addpath('/home/olmozavala/Dropbox/OzOpenCL/Matlab_CreateNifti/External_Tools');
 addpath(imagesRootFolder);
 
 folders={ '8256301_p1_ok', '7585734_p14_ok_huge_tumor', '6107252_p2_ok', '5641445_p1_ok_non-mass_from_mass', '0847664_p6_ok'};
@@ -51,12 +51,12 @@ for f = 1:length(folders)
         if( i == 2)
             if(optimizer == 'evol')
                 OPTIMIZER = registration.optimizer.OnePlusOneEvolutionary;
-                METRIC = registration.metric.MattesMutualInformation;
             else
                 %[OPTIMIZER, METRIC] = imregconfig('multimodal');
                 [OPTIMIZER, METRIC] = imregconfig('monomodal');
             end
         end
+        METRIC = registration.metric.MattesMutualInformation;
 
         imgData= nii.img;
         % Remove chest regions to reduce image size
